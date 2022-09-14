@@ -1,0 +1,480 @@
+type: cloudgenix template
+sdk_version: 5.6.1b2
+config_version: 1.6.0b1
+sites v4.6:
+  '{{ site_code }}':
+    address:
+      city: {{ city }}
+      country: {{ country }}
+      post_code: '{{ post_code }}'
+      state: {{ state }}
+      street: {{ street }}
+      street2: {{ street2 }}
+    admin_state: active
+    description:
+    dhcpservers v2.1:
+    - broadcast_address: 192.168.{{ local_subnet }}.255
+      custom_options:
+      default_lease_time: 43200
+      description: Corp LAN
+      disabled: false
+      dns_servers:
+      - 10.5.100.10
+      - 10.5.101.10
+      domain_name: alvisofincorp.corp
+      gateway: 192.168.{{ local_subnet }}.1
+      ip_ranges:
+      - end_ip: 192.168.{{ local_subnet }}.200
+        start_ip: 192.168.{{ local_subnet }}.10
+      max_lease_time: 86400
+      network_context_id:
+      static_mappings:
+      subnet: 192.168.{{ local_subnet }}.0/24
+      tags:
+    - broadcast_address: 192.168.{{ guest_subnet }}.255
+      custom_options:
+      default_lease_time: 43200
+      description: Guest Wifi
+      disabled: false
+      dns_servers:
+      - 1.1.1.1
+      - 1.0.0.1
+      domain_name:
+      gateway: 192.168.{{ guest_subnet }}.1
+      ip_ranges:
+      - end_ip: 192.168.{{ guest_subnet }}.250
+        start_ip: 192.168.{{ guest_subnet }}.10
+      max_lease_time: 86400
+      network_context_id:
+      static_mappings:
+      subnet: 192.168.{{ guest_subnet }}.0/24
+      tags:
+    element_cluster_role: SPOKE
+    elements v2.5:
+      {{ hostname }}:
+        admin_action:
+        admin_renew_state:
+        admin_suspend_state: active_suspend_init
+        allowed_roles:
+        - SPOKE
+        application_probe v2.0:
+          description:
+          enable_probe: true
+          name: app_probe_port2
+          source_interface_id: '2'
+          tags:
+        cellular_modules_sim_security v2.0:
+          Sim Security Slot 1:
+            description:
+            pin:
+            remove_pin: true
+            slot_number: 1
+            tags:
+          Sim Security Slot 2:
+            description:
+            pin:
+            remove_pin: true
+            slot_number: 2
+            tags:
+        cluster_insertion_mode:
+        cluster_member_id:
+        connected: true
+        deployment_op:
+        description:
+        element_cellular_modules v2.0:
+          cwan1:
+            description:
+            gps_enable: true
+            primary_sim: 1
+            radio_on: true
+            tags:
+        element_security_zones v2.0: []
+        fips_mode: non_fips
+        fips_mode_change_start_time: 0
+        interfaces v4.11:
+          '1':
+            admin_up: true
+            attached_lan_networks:
+            bound_interfaces:
+            bypass_pair:
+            cellular_config:
+            description: ''
+            devicemgmt_policysetstack_id:
+            dhcp_relay:
+            directed_broadcast: false
+            ethernet_port:
+              full_duplex: false
+              speed: 0
+            ipfixcollectorcontext_id:
+            ipfixfiltercontext_id:
+            ipv4_config:
+              dhcp_config:
+              dns_v4_config:
+              routes:
+              static_config:
+              type: dhcp
+            mac_address:
+            mtu: 1500
+            multicast_config:
+              igmp_version: IGMPV3
+              multicast_enabled: false
+            nat_address:
+            nat_pools:
+            nat_port: 0
+            nat_zone_id: internet
+            network_context_id:
+            parent:
+            pppoe_config:
+            scope: local
+            secondary_ip_configs:
+            service_link_config:
+            site_wan_interface_ids:
+            - {{ wired_inet_label }}
+            static_arp_configs:
+            sub_interface:
+            tags:
+            - prisma_region:{{ prisma_region_spn }}
+            type: port
+            used_for: public
+          '2':
+            admin_up: true
+            attached_lan_networks:
+            bound_interfaces:
+            bypass_pair:
+            cellular_config:
+            description: 'LAN Network'
+            devicemgmt_policysetstack_id:
+            dhcp_relay:
+            directed_broadcast: false
+            ethernet_port:
+              full_duplex: true
+              speed: 100
+            ipfixcollectorcontext_id:
+            ipfixfiltercontext_id:
+            ipv4_config:
+              dhcp_config:
+              dns_v4_config:
+              routes:
+              static_config:
+                address: 192.168.{{ local_subnet }}.1/24
+              type: static
+            mac_address:
+            mtu: 1500
+            multicast_config:
+              igmp_version: IGMPV3
+              multicast_enabled: false
+            nat_address:
+            nat_pools:
+            nat_port: 0
+            nat_zone_id:
+            network_context_id:
+            parent:
+            pppoe_config:
+            scope: global
+            secondary_ip_configs:
+            service_link_config:
+            site_wan_interface_ids:
+            static_arp_configs:
+            sub_interface:
+            tags:
+            type: port
+            used_for: lan
+          '3':
+            admin_up: true
+            attached_lan_networks:
+            bound_interfaces:
+            bypass_pair:
+            cellular_config:
+            description: 'Guest Network'
+            devicemgmt_policysetstack_id:
+            dhcp_relay:
+            directed_broadcast: false
+            ethernet_port:
+              full_duplex: true
+              speed: 100
+            ipfixcollectorcontext_id:
+            ipfixfiltercontext_id:
+            ipv4_config:
+              dhcp_config:
+              dns_v4_config:
+              routes:
+              static_config:
+                address: 192.168.{{ guest_subnet }}.1/24
+              type: static
+            mac_address:
+            mtu: 1500
+            multicast_config:
+              igmp_version: IGMPV3
+              multicast_enabled: false
+            nat_address:
+            nat_pools:
+            nat_port: 0
+            nat_zone_id:
+            network_context_id: Guest_Network
+            parent:
+            pppoe_config:
+            scope: global
+            secondary_ip_configs:
+            service_link_config:
+            site_wan_interface_ids:
+            static_arp_configs:
+            sub_interface:
+            tags:
+            type: port
+            used_for: lan
+          '4':
+            admin_up: false
+            attached_lan_networks:
+            bound_interfaces:
+            bypass_pair:
+            cellular_config:
+            description: ''
+            devicemgmt_policysetstack_id:
+            dhcp_relay:
+            directed_broadcast: false
+            ethernet_port:
+              full_duplex: false
+              speed: 0
+            ipfixcollectorcontext_id:
+            ipfixfiltercontext_id:
+            ipv4_config:
+              dhcp_config:
+              dns_v4_config:
+              routes:
+              static_config:
+              type: dhcp
+            mac_address:
+            mtu: 1500
+            multicast_config:
+              igmp_version: IGMPV3
+              multicast_enabled: false
+            nat_address:
+            nat_pools:
+            nat_port: 0
+            nat_zone_id:
+            network_context_id:
+            parent:
+            pppoe_config:
+            scope: local
+            secondary_ip_configs:
+            service_link_config:
+            site_wan_interface_ids:
+            static_arp_configs:
+            sub_interface:
+            tags:
+            type: port
+            used_for: none
+          cellular1:
+            admin_up: true
+            attached_lan_networks:
+            bound_interfaces:
+            bypass_pair:
+            cellular_config:
+              apn_config:
+                apn: broadband
+                authentication: none
+                clear_password: true
+                password:
+                user_name:
+              apnprofile_id:
+              auto_apn: false
+              parent_module_id: cwan1
+              parent_sim_slot_number: 1
+            description: ''
+            devicemgmt_policysetstack_id:
+            dhcp_relay:
+            directed_broadcast: false
+            ethernet_port:
+              full_duplex: false
+              speed: 0
+            ipfixcollectorcontext_id:
+            ipfixfiltercontext_id:
+            ipv4_config:
+              dhcp_config:
+              dns_v4_config:
+              routes:
+              static_config:
+              type: negotiated
+            mac_address:
+            mtu: 1428
+            multicast_config:
+              igmp_version: IGMPV3
+              multicast_enabled: false
+            nat_address:
+            nat_pools:
+            nat_port: 0
+            nat_zone_id: internet
+            network_context_id:
+            parent:
+            pppoe_config:
+            scope: local
+            secondary_ip_configs:
+            service_link_config:
+            site_wan_interface_ids:
+            - {{ wireless_inet_label }}
+            static_arp_configs:
+            sub_interface:
+            tags:
+            - prisma_region:{{ prisma_region_spn }}
+            type: cellular
+            used_for: public
+          cellular2:
+            admin_up: false
+            attached_lan_networks:
+            bound_interfaces:
+            bypass_pair:
+            cellular_config:
+              apn_config:
+              apnprofile_id:
+              auto_apn: true
+              parent_module_id: cwan1
+              parent_sim_slot_number: 2
+            description: ''
+            devicemgmt_policysetstack_id:
+            dhcp_relay:
+            directed_broadcast: false
+            ethernet_port:
+              full_duplex: false
+              speed: 0
+            ipfixcollectorcontext_id:
+            ipfixfiltercontext_id:
+            ipv4_config:
+              dhcp_config:
+              dns_v4_config:
+              routes:
+              static_config:
+              type: negotiated
+            mac_address:
+            mtu: 1428
+            multicast_config:
+              igmp_version: IGMPV3
+              multicast_enabled: false
+            nat_address:
+            nat_pools:
+            nat_port: 0
+            nat_zone_id: internet
+            network_context_id:
+            parent:
+            pppoe_config:
+            scope: local
+            secondary_ip_configs:
+            service_link_config:
+            site_wan_interface_ids:
+            static_arp_configs:
+            sub_interface:
+            tags:
+            type: cellular
+            used_for: public
+        l3_direct_private_wan_forwarding: true
+        l3_lan_forwarding: true
+        model_name: ion 1200-c5g-ww
+        multicastglobalconfigs v2.0:
+        - spt_switchover_enabled: true
+        nat_policysetstack_id:
+        network_policysetstack_id:
+        ntp v2.0:
+        - description: Default NTP template created by super user.
+          name: default
+          ntp_servers:
+          - host: 0.cloudgenix.pool.ntp.org
+            max_poll: 10
+            min_poll: 9
+            version: 4
+          - host: 1.cloudgenix.pool.ntp.org
+            max_poll: 10
+            min_poll: 9
+            version: 4
+          - host: 2.cloudgenix.pool.ntp.org
+            max_poll: 10
+            min_poll: 9
+            version: 4
+          - host: 3.cloudgenix.pool.ntp.org
+            max_poll: 10
+            min_poll: 9
+            version: 4
+          - host: time.nist.gov
+            max_poll: 15
+            min_poll: 13
+            version: 4
+          source_interface_ids:
+          tags:
+        priority_policysetstack_id:
+        role: SPOKE
+        routing:
+          bgp:
+          static v2.1: {}
+        serial_number: {{ serial_number }}
+        software_version: {{ software_version }}
+        spoke_ha_config:
+        state: bound
+        tags:
+        tenant_id: '21618293763'
+        toolkit v2.2:
+          account_disable_interval: 5
+          inactive_interval: 15
+          otpkey_version: 1
+          retry_login_count: 5
+          ssh_enabled: true
+          ssh_outbound_enabled: true
+        vpn_to_vpn_forwarding: false
+    extended_tags:
+    - key: prisma_access
+      value: '{"bgp":{"enabled":true,"as_number":65001,"default_route":false,"advertise_to_prisma":false,"shared_secret":""},"bandwidth_detection":{"enabled":false},"ecmp":[]}'
+      value_type: object
+    location:
+      description:
+      latitude: {{ site_lat }}
+      longitude: {{ site_long }}
+    nat_policysetstack_id: Production NAT Policy Stack
+    network_policysetstack_id: Production Path Policy Stack (Simple)
+    policy_set_id:
+    priority_policysetstack_id: Production QoS Policy Stack (Simple)
+    security_policyset_id:
+    security_policysetstack_id:
+    service_binding: {{ domain }}
+    tags:
+    - prisma_access
+    waninterfaces v2.7:
+      {{ wireless_inet_label }}:
+        bfd_mode: non_aggressive
+        bw_config_mode: manual_bwm_disabled
+        bwc_enabled: true
+        cost: 129
+        description:
+        label_id: Metered 5G Internet
+        link_bw_down: {{ wireless_bw_down }}
+        link_bw_up: {{ wireless_bw_up }}
+        lqm_config:
+        lqm_enabled: false
+        network_id: AT&T
+        network_type: publicwan
+        tags:
+        type: publicwan
+        use_for_application_reachability_probes: false
+        use_for_controller_connections: false
+        use_lqm_for_non_hub_paths:
+        vpnlink_configuration:
+          keep_alive_failure_count: 10
+          keep_alive_interval: 600000
+      {{ wired_inet_label }}:
+        bfd_mode: aggressive
+        bw_config_mode: manual
+        bwc_enabled: true
+        cost: 128
+        description:
+        label_id: Ethernet Internet
+        link_bw_down: {{ wired_bw_down }}
+        link_bw_up: {{ wired_bw_up }}
+        lqm_config:
+          hub_site_ids:
+          inter_packet_gap: 100
+          statistic: min
+        lqm_enabled: true
+        network_id: AT&T
+        network_type: publicwan
+        tags:
+        type: publicwan
+        use_for_application_reachability_probes:
+        use_for_controller_connections:
+        use_lqm_for_non_hub_paths:
+        vpnlink_configuration:
