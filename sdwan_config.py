@@ -39,7 +39,7 @@ def get_lat_long (text_as_str):
     #latitude = 22
     #longitude = 33
     #return (latitude, longitude)
-    map_url = f"https://www.mapquestapi.com/geocoding/v1/address?key=YXhn7Z43jl1rUOrevwzAsYLQStGhdGcu&location={address_concat}"
+    map_url = f"https://www.mapquestapi.com/geocoding/v1/address?key=<instert mapquest API token>&location={address_concat}"
     location = requests.get(url=map_url, verify=False).json()
     latLng = location['results'][0]['locations'][0]['latLng']
     latitude = latLng['lat']
